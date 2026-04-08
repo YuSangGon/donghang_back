@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "posts")
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Post extends BaseTimeEntity {
@@ -39,6 +38,15 @@ public class Post extends BaseTimeEntity {
 
     @Column(name = "view_cnt", nullable = false)
     private int viewCnt;
+
+    public Post(User user, PostCategory category, String title, String content, String location) {
+        this.user = user;
+        this.category = category;
+        this.title = title;
+        this.content = content;
+        this.location = location;
+        this.viewCnt = 0;
+    }
 
     public void update(String title, String content, String location, PostCategory category) {
         this.title = title;

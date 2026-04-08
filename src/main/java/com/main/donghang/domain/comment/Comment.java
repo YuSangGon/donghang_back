@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "comments")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class Comment extends BaseTimeEntity {
 
     @Id
@@ -33,6 +32,13 @@ public class Comment extends BaseTimeEntity {
     @Lob
     @Column(nullable = false)
     private String content;
+
+    public Comment(Post post, User user, Comment parentComment, String content) {
+        this.post = post;
+        this.user = user;
+        this.parentComment = parentComment;
+        this.content = content;
+    }
 
     public void updateContent(String content) {
         this.content = content;

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findTop8ByCategoryOrderByCreatedAtDesc(PostCategory category);
+
+    List<Post> findByCategoryOrderByCreatedAtDesc(PostCategory category);
 }
