@@ -37,8 +37,12 @@ public class PostController {
     }
 
     @GetMapping
-    public List<PostSimpleResponse> getPostsByCategory(@RequestParam PostCategory category) {
-        return postService.getPostsByCategory(category);
+    public PostPageResponse getPostsByCategory(
+            @RequestParam PostCategory category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return postService.getPostsByCategory(category, page, size);
     }
 
     @GetMapping("/latest")

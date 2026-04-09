@@ -4,6 +4,8 @@ import com.main.donghang.domain.post.dto.*;
 import com.main.donghang.domain.user.User;
 import com.main.donghang.domain.user.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,11 +67,23 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public List<PostSimpleResponse> getPostsByCategory(PostCategory category) {
-        return postRepository.findByCategoryOrderByCreatedAtDesc(category)
+    public PostPageResponse getPostsByCategory(PostCategory category, int page, int size) {
+        Page<Post> result = postRepository.findByCategoryOrderByCreatedAtDesc(category, PageRequest.of(page, size));
+
+        List<PostSimpleResponse> content = result.getContent()
                 .stream()
                 .map(PostSimpleResponse::new)
                 .toList();
+
+        return new PostPageResponse(
+                content,
+                result.getNumber(),
+                result.getSize(),
+                result.getTotalPages(),
+                result.getTotalElements(),
+                result.isFirst(),
+                result.isLast()
+        );
     }
 
     public List<HomePostPreviewResponse> getLatestTop8ByCategory(PostCategory category) {
