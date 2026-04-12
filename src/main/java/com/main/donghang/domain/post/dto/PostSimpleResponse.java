@@ -1,5 +1,6 @@
 package com.main.donghang.domain.post.dto;
 
+import com.main.donghang.domain.job.dto.JobType;
 import com.main.donghang.domain.post.Post;
 import com.main.donghang.domain.post.PostCategory;
 import com.main.donghang.domain.rent.dto.RentOfferType;
@@ -18,6 +19,7 @@ public class PostSimpleResponse {
     private PostCategory category;
     private LocalDateTime createdAt;
     private RentOfferType offerType;
+    private JobType jobType;
 
     public PostSimpleResponse(Post post) {
         this.id = post.getId();
@@ -28,17 +30,17 @@ public class PostSimpleResponse {
         this.category = post.getCategory();
         this.createdAt = post.getCreatedAt();
         this.offerType = null;
+        this.jobType = null;
     }
 
     public PostSimpleResponse(Post post, RentOfferType offerType) {
-        this.id = post.getId();
-        this.title = post.getTitle();
-        this.location = post.getLocation();
-        this.nickname = post.getUser().getNickname();
-        this.viewCnt = post.getViewCnt();
-        this.category = post.getCategory();
-        this.createdAt = post.getCreatedAt();
+        this(post);
         this.offerType = offerType;
+    }
+
+    public PostSimpleResponse(Post post, JobType jobType) {
+        this(post);
+        this.jobType = jobType;
     }
 
 }

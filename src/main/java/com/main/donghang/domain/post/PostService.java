@@ -1,5 +1,6 @@
 package com.main.donghang.domain.post;
 
+import com.main.donghang.domain.job.JobPostRepository;
 import com.main.donghang.domain.post.dto.*;
 import com.main.donghang.domain.rent.RentPostRepository;
 import com.main.donghang.domain.user.User;
@@ -18,11 +19,18 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final RentPostRepository rentPostRepository;
+    private final JobPostRepository jobPostRepository;
 
-    public PostService(PostRepository postRepository, UserRepository userRepository, RentPostRepository rentPostRepository) {
+    public PostService(
+            PostRepository postRepository,
+            UserRepository userRepository,
+            RentPostRepository rentPostRepository,
+            JobPostRepository jobPostRepository
+    ) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.rentPostRepository = rentPostRepository;
+        this.jobPostRepository = jobPostRepository;
     }
 
     public Long create(PostCreateRequest request) {
@@ -79,6 +87,12 @@ public class PostService {
                     if (post.getCategory() == PostCategory.RENT) {
                         return rentPostRepository.findByPostId(post.getId())
                                 .map(rentPost -> new PostSimpleResponse(post, rentPost.getOfferType()))
+                                .orElseGet(() -> new PostSimpleResponse(post));
+                    }
+
+                    if (post.getCategory() == PostCategory.JOB) {
+                        return jobPostRepository.findByPostId(post.getId())
+                                .map(jobPost -> new PostSimpleResponse(post, jobPost.getJobType()))
                                 .orElseGet(() -> new PostSimpleResponse(post));
                     }
                     return new PostSimpleResponse(post);
