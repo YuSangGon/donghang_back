@@ -2,6 +2,7 @@ package com.main.donghang.domain.post.dto;
 
 import com.main.donghang.domain.post.Post;
 import com.main.donghang.domain.post.PostCategory;
+import com.main.donghang.domain.rent.dto.RentOfferType;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class PostSimpleResponse {
     private int viewCnt;
     private PostCategory category;
     private LocalDateTime createdAt;
+    private RentOfferType offerType;
 
     public PostSimpleResponse(Post post) {
         this.id = post.getId();
@@ -25,6 +27,18 @@ public class PostSimpleResponse {
         this.viewCnt = post.getViewCnt();
         this.category = post.getCategory();
         this.createdAt = post.getCreatedAt();
+        this.offerType = null;
+    }
+
+    public PostSimpleResponse(Post post, RentOfferType offerType) {
+        this.id = post.getId();
+        this.title = post.getTitle();
+        this.location = post.getLocation();
+        this.nickname = post.getUser().getNickname();
+        this.viewCnt = post.getViewCnt();
+        this.category = post.getCategory();
+        this.createdAt = post.getCreatedAt();
+        this.offerType = offerType;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.main.donghang.domain.post;
 
 import com.main.donghang.domain.post.dto.*;
+import com.main.donghang.domain.rent.RentPostRepository;
 import com.main.donghang.domain.user.User;
 import com.main.donghang.domain.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -16,10 +17,12 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final RentPostRepository rentPostRepository;
 
-    public PostService(PostRepository postRepository, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository, RentPostRepository rentPostRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.rentPostRepository = rentPostRepository;
     }
 
     public Long create(PostCreateRequest request) {
@@ -72,7 +75,14 @@ public class PostService {
 
         List<PostSimpleResponse> content = result.getContent()
                 .stream()
-                .map(PostSimpleResponse::new)
+                .map(post -> {
+                    if (post.getCategory() == PostCategory.RENT) {
+                        return rentPostRepository.findByPostId(post.getId())
+                                .map(rentPost -> new PostSimpleResponse(post, rentPost.getOfferType()))
+                                .orElseGet(() -> new PostSimpleResponse(post));
+                    }
+                    return new PostSimpleResponse(post);
+                })
                 .toList();
 
         return new PostPageResponse(
