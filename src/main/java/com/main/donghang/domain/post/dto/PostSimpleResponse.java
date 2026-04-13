@@ -18,6 +18,8 @@ public class PostSimpleResponse {
     private int viewCnt;
     private PostCategory category;
     private LocalDateTime createdAt;
+    private String countryCode;
+    private String countryName;
     private RentOfferType offerType;
     private JobType jobType;
 
@@ -29,6 +31,8 @@ public class PostSimpleResponse {
         this.viewCnt = post.getViewCnt();
         this.category = post.getCategory();
         this.createdAt = post.getCreatedAt();
+        this.countryCode = post.getCountryCode();
+        this.countryName = post.getCountryName();
         this.offerType = null;
         this.jobType = null;
     }

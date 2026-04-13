@@ -13,5 +13,7 @@ public class PostCreateRequest {
     private String title;
     private String content;
     private String location;
+    private String countryCode;
+    private String countryName;
 
 }

@@ -15,5 +15,7 @@ public class JobPostUpdateRequest {
     private JobType jobType;
     private BigDecimal pay;
     private String position;
+    private String countryCode;
+    private String countryName;
 
 }

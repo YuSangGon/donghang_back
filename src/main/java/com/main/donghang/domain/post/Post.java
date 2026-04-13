@@ -36,23 +36,48 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false, length = 100)
     private String location;
 
+    @Column(name = "country_code", nullable = false, length = 10)
+    private String countryCode;
+
+    @Column(name = "country_name", nullable = false, length = 100)
+    private String countryName;
+
     @Column(name = "view_cnt", nullable = false)
     private int viewCnt;
 
-    public Post(User user, PostCategory category, String title, String content, String location) {
+    public Post(
+            User user,
+            PostCategory category,
+            String title,
+            String content,
+            String location,
+            String countryCode,
+            String countryName
+    ) {
         this.user = user;
         this.category = category;
         this.title = title;
         this.content = content;
         this.location = location;
+        this.countryCode = countryCode;
+        this.countryName = countryName;
         this.viewCnt = 0;
     }
 
-    public void update(String title, String content, String location, PostCategory category) {
+    public void update(
+            String title,
+            String content,
+            String location,
+            PostCategory category,
+            String countryCode,
+            String countryName
+    ) {
         this.title = title;
         this.content = content;
         this.location = location;
         this.category = category;
+        this.countryCode = countryCode;
+        this.countryName = countryName;
     }
 
     public void increaseViewCount() {

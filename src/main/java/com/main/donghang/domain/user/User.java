@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
@@ -32,6 +31,14 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    public User(String loginId, String password, String email, String nickname, Gender gender) {
+        this.loginId = loginId;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+        this.gender = gender;
+    }
 
     public void changeNickname(String nickname) {
         this.nickname = nickname;

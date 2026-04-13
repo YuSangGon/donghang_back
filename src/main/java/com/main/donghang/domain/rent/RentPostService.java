@@ -44,7 +44,9 @@ public class RentPostService {
                 PostCategory.RENT,
                 request.getTitle(),
                 request.getContent(),
-                request.getAddress()
+                request.getAddress(),
+                request.getCountryCode(),
+                request.getCountryName()
         );
 
         Post savedPost = postRepository.save(post);
@@ -127,7 +129,9 @@ public class RentPostService {
                 request.getTitle(),
                 request.getContent(),
                 request.getAddress(),
-                PostCategory.RENT
+                PostCategory.RENT,
+                request.getCountryCode(),
+                request.getCountryName()
         );
 
         rentPost.update(

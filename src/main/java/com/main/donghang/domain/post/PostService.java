@@ -8,6 +8,7 @@ import com.main.donghang.domain.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +43,9 @@ public class PostService {
                 request.getCategory(),
                 request.getTitle(),
                 request.getContent(),
-                request.getLocation()
+                request.getLocation(),
+                request.getCountryCode(),
+                request.getCountryName()
         );
 
         return postRepository.save(post).getId();
@@ -65,7 +68,9 @@ public class PostService {
                 request.getTitle(),
                 request.getContent(),
                 request.getLocation(),
-                request.getCategory()
+                request.getCategory(),
+                request.getCountryCode(),
+                request.getCountryName()
         );
 
         return post.getId();
@@ -78,8 +83,20 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public PostPageResponse getPostsByCategory(PostCategory category, int page, int size) {
-        Page<Post> result = postRepository.findByCategoryOrderByCreatedAtDesc(category, PageRequest.of(page, size));
+    public PostPageResponse getPostsByCategory(
+            PostCategory category,
+            String countryCode,
+            String keyword,
+            int page,
+            int size
+    ) {
+
+        Specification<Post> specification = Specification
+                .where(PostSpecification.hasCategory(category))
+                .and(PostSpecification.hasCountryCode(countryCode))
+                .and(PostSpecification.containsKeyword(keyword));
+
+        Page<Post> result = postRepository.findAll(specification, PageRequest.of(page, size));
 
         List<PostSimpleResponse> content = result.getContent()
                 .stream()

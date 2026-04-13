@@ -16,6 +16,8 @@ public class PostResponse {
     private String title;
     private String content;
     private String location;
+    private String countryCode;
+    private String countryName;
     private int viewCnt;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -28,6 +30,8 @@ public class PostResponse {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.location = post.getLocation();
+        this.countryCode = post.getCountryCode();
+        this.countryName = post.getCountryName();
         this.viewCnt = post.getViewCnt();
         this.createdAt = post.getCreatedAt();
         this.updatedAt = post.getUpdatedAt();

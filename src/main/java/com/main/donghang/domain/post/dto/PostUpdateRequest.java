@@ -12,4 +12,6 @@ public class PostUpdateRequest {
     private String content;
     private String location;
     private PostCategory category;
+    private String countryCode;
+    private String countryName;
 }

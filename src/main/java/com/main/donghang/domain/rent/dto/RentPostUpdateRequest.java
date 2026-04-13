@@ -34,4 +34,6 @@ public class RentPostUpdateRequest {
     private String preferredStayDuration;
 
     private List<String> imageUrls;
+    private String countryCode;
+    private String countryName;
 }

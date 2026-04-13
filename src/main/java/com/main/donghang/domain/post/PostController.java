@@ -39,10 +39,12 @@ public class PostController {
     @GetMapping
     public PostPageResponse getPostsByCategory(
             @RequestParam PostCategory category,
+            @RequestParam(required = false) String countryCode,
+            @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        return postService.getPostsByCategory(category, page, size);
+        return postService.getPostsByCategory(category, countryCode, keyword, page, size);
     }
 
     @GetMapping("/latest")

@@ -17,5 +17,7 @@ public class JobPostCreateRequest {
     private JobType jobType;
     private BigDecimal pay;
     private String position;
+    private String countryCode;
+    private String countryName;
 
 }

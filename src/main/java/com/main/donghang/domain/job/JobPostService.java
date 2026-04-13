@@ -38,7 +38,9 @@ public class JobPostService {
                 PostCategory.JOB,
                 request.getTitle(),
                 request.getContent(),
-                request.getLocation()
+                request.getLocation(),
+                request.getCountryCode(),
+                request.getCountryName()
         );
 
         Post savedPost = postRepository.save(post);
@@ -64,7 +66,9 @@ public class JobPostService {
                 request.getTitle(),
                 request.getContent(),
                 request.getLocation(),
-                PostCategory.JOB
+                PostCategory.JOB,
+                request.getCountryCode(),
+                request.getCountryName()
         );
 
         jobPost.update(
