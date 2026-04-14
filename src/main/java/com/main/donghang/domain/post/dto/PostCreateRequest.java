@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class PostCreateRequest {
 
-    private Long userId;
     private PostCategory category;
     private String title;
     private String content;

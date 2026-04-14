@@ -13,6 +13,7 @@ import java.util.List;
 public class RentPostDetailResponse {
 
     private Long postId;
+    private Long userId;
     private String title;
     private String content;
     private String nickname;

@@ -5,6 +5,7 @@ import com.main.donghang.domain.post.dto.*;
 import com.main.donghang.domain.rent.RentPostRepository;
 import com.main.donghang.domain.user.User;
 import com.main.donghang.domain.user.UserRepository;
+import com.main.donghang.global.auth.AuthUserUtil;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,21 +22,26 @@ public class PostService {
     private final UserRepository userRepository;
     private final RentPostRepository rentPostRepository;
     private final JobPostRepository jobPostRepository;
+    private final AuthUserUtil authUserUtil;
 
     public PostService(
             PostRepository postRepository,
             UserRepository userRepository,
             RentPostRepository rentPostRepository,
-            JobPostRepository jobPostRepository
+            JobPostRepository jobPostRepository,
+            AuthUserUtil authUserUtil
     ) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.rentPostRepository = rentPostRepository;
         this.jobPostRepository = jobPostRepository;
+        this.authUserUtil = authUserUtil;
     }
 
     public Long create(PostCreateRequest request) {
-        User user = userRepository.findById(request.getUserId())
+        Long currentUserId = authUserUtil.getCurrentUserId();
+
+        User user = userRepository.findById(currentUserId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         Post post = new Post(
@@ -60,9 +66,19 @@ public class PostService {
         return new PostResponse(post);
     }
 
+    private void validateOwner(Post post) {
+        Long currentUserId = authUserUtil.getCurrentUserId();
+
+        if (!post.getUser().getId().equals(currentUserId)) {
+            throw new IllegalArgumentException("본인이 작성한 글만 수정 또는 삭제할 수 있습니다.");
+        }
+    }
+
     public Long update(Long postId, PostUpdateRequest request) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+
+        validateOwner(post);
 
         post.update(
                 request.getTitle(),
@@ -79,6 +95,8 @@ public class PostService {
     public void delete(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
+
+        validateOwner(post);
 
         postRepository.delete(post);
     }

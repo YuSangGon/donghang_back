@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 @Getter
 public class JobPostCreateRequest {
 
-    private Long userId;
     private String title;
     private String content;
     private String location;

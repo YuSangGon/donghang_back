@@ -2,6 +2,7 @@ package com.main.donghang.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,6 +23,23 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/api/posts").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/posts/*").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/posts/*").authenticated()
+
+                        .requestMatchers(HttpMethod.POST, "/api/rent-posts").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/rent-posts/*").authenticated()
+
+                        .requestMatchers(HttpMethod.POST, "/api/job-posts").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/job-posts/*").authenticated()
+
+                        .requestMatchers(HttpMethod.POST, "/api/posts/*/comments").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/comments/*").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/comments/*").authenticated()
+
+                        .requestMatchers(HttpMethod.POST, "/api/files/images").authenticated()
+
                         .anyRequest().permitAll()
                 );
 

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class JobPostDetailResponse {
 
     private Long postId;
+    private Long userId;
     private String title;
     private String content;
     private String nickname;

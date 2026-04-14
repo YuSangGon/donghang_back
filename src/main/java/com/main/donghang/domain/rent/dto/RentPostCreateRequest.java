@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class RentPostCreateRequest {
-    private Long userId;
     private String title;
     private String content;
 

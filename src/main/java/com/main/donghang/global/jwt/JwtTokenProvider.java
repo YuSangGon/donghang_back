@@ -42,6 +42,11 @@ public class JwtTokenProvider {
         return Long.valueOf(claims.getSubject());
     }
 
+    public String getLoginId(String token) {
+        Claims claims = parseClaims(token);
+        return claims.get("loginId", String.class);
+    }
+
     public boolean validateToken(String token) {
         try {
             parseClaims(token);
