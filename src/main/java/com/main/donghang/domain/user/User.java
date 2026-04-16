@@ -17,6 +17,12 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "provider", length = 20)
+    private String provider; // LOCAL, GOOGLE
+
+    @Column(name = "provider_id", length = 100)
+    private String providerId;
+
     @Column(name = "login_id", nullable = false, unique = true, length = 50)
     private String loginId;
 
@@ -38,6 +44,24 @@ public class User extends BaseTimeEntity {
         this.email = email;
         this.nickname = nickname;
         this.gender = gender;
+    }
+
+    public User(
+            String loginId,
+            String password,
+            String email,
+            String nickname,
+            Gender gender,
+            String provider,
+            String providerId
+    ) {
+        this.loginId = loginId;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+        this.gender = gender;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 
     public void changeNickname(String nickname) {

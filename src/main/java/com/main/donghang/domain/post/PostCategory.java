@@ -4,5 +4,6 @@ public enum PostCategory {
     DONGHANG,
     RENT,
     JOB,
-    INFO
+    INFO,
+    MARKET
 }

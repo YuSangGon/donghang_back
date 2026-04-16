@@ -1,6 +1,7 @@
 package com.main.donghang.domain.post.dto;
 
 import com.main.donghang.domain.job.dto.JobType;
+import com.main.donghang.domain.market.MarketType;
 import com.main.donghang.domain.post.Post;
 import com.main.donghang.domain.post.PostCategory;
 import com.main.donghang.domain.rent.dto.RentOfferType;
@@ -22,6 +23,7 @@ public class PostSimpleResponse {
     private String countryName;
     private RentOfferType offerType;
     private JobType jobType;
+    private MarketType marketType;
 
     public PostSimpleResponse(Post post) {
         this.id = post.getId();
@@ -35,6 +37,7 @@ public class PostSimpleResponse {
         this.countryName = post.getCountryName();
         this.offerType = null;
         this.jobType = null;
+        this.marketType = null;
     }
 
     public PostSimpleResponse(Post post, RentOfferType offerType) {
@@ -45,6 +48,11 @@ public class PostSimpleResponse {
     public PostSimpleResponse(Post post, JobType jobType) {
         this(post);
         this.jobType = jobType;
+    }
+
+    public PostSimpleResponse(Post post, MarketType marketType) {
+        this(post);
+        this.marketType = marketType;
     }
 
 }

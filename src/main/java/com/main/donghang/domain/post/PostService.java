@@ -1,6 +1,7 @@
 package com.main.donghang.domain.post;
 
 import com.main.donghang.domain.job.JobPostRepository;
+import com.main.donghang.domain.market.MarketPostRepository;
 import com.main.donghang.domain.post.dto.*;
 import com.main.donghang.domain.rent.RentPostRepository;
 import com.main.donghang.domain.user.User;
@@ -23,18 +24,21 @@ public class PostService {
     private final RentPostRepository rentPostRepository;
     private final JobPostRepository jobPostRepository;
     private final AuthUserUtil authUserUtil;
+    private final MarketPostRepository marketPostRepository;
 
     public PostService(
             PostRepository postRepository,
             UserRepository userRepository,
             RentPostRepository rentPostRepository,
             JobPostRepository jobPostRepository,
+            MarketPostRepository marketPostRepository,
             AuthUserUtil authUserUtil
     ) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.rentPostRepository = rentPostRepository;
         this.jobPostRepository = jobPostRepository;
+        this.marketPostRepository = marketPostRepository;
         this.authUserUtil = authUserUtil;
     }
 
@@ -130,6 +134,13 @@ public class PostService {
                                 .map(jobPost -> new PostSimpleResponse(post, jobPost.getJobType()))
                                 .orElseGet(() -> new PostSimpleResponse(post));
                     }
+
+                    if (post.getCategory() == PostCategory.MARKET) {
+                        return marketPostRepository.findByPostId(post.getId())
+                                .map(marketPost -> new PostSimpleResponse(post, marketPost.getMarketType()))
+                                .orElseGet(() -> new PostSimpleResponse(post));
+                    }
+
                     return new PostSimpleResponse(post);
                 })
                 .toList();
