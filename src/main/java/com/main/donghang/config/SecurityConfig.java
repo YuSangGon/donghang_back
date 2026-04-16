@@ -66,6 +66,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/comments/*").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/comments/*").authenticated()
 
+                        .requestMatchers("/api/chat/**").authenticated()
+
                         .requestMatchers(HttpMethod.POST, "/api/files/images").authenticated()
 
                         .anyRequest().permitAll()
